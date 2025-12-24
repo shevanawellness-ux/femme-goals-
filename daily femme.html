@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Daily FEMME</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body{
+  font-family: -apple-system, BlinkMacSystemFont, "Poppins", sans-serif;
+  background:#ffffff;
+  color:#111;
+  padding:24px;
+}
+.daily{
+  border-left:4px solid #e8b7c8;
+  padding-left:16px;
+}
+.phrase{
+  font-size:20px;
+  font-weight:600;
+  margin-bottom:10px;
+}
+.lines{
+  font-size:15px;
+  line-height:1.6;
+}
+</style>
+</head>
+<body>
+
+<div class="daily">
+  <div class="phrase" id="phrase"></div>
+  <div class="lines" id="lines"></div>
+</div>
+
+<script>
+const entries = [
+"Frame your face first.|Round: Vertical framing<br>Oval: Balanced framing<br>Square: Soft curves<br>Heart: Volume near jaw<br>Long: Width at sides",
+"Upgrade one habit today.|Small improvement<br>Visible discipline<br>Quiet growth",
+"Let metal match your skin.|Warm: Gold<br>Cool: Silver<br>Neutral: Mixed metals<br>Olive: Brushed gold<br>Deep: Antique gold",
+"Balance your upper half.|Apple: Open sleeves<br>Pear: Puff sleeves<br>Hourglass: Fitted sleeves<br>Rectangle: Layered sleeves<br>Inverted Triangle: Slim sleeves",
+"Confidence begins with posture.|Stand tall<br>Relax shoulders<br>Breathe slowly",
+"Choose earrings that sculpt.|Round: Long drops<br>Oval: Any shape<br>Square: Curves<br>Heart: Teardrops<br>Long: Studs",
+"Let blush lift, not drag.|Round: Upward sweep<br>Oval: Soft blend<br>Square: High placement<br>Heart: Outer cheeks<br>Long: Horizontal sweep",
+"One piece, one purpose.|Apple: Wrap dress<br>Pear: Fit & flare<br>Hourglass: Body-skimming<br>Rectangle: Belted shift<br>Inverted Triangle: A-line",
+"Speak gently, firmly.|Clear voice<br>No rushing<br>No apology",
+"Let fabric work for you.|Apple: Straight fits<br>Pear: Flared bottoms<br>Hourglass: Tailored<br>Rectangle: Wide-leg<br>Inverted Triangle: Flowing",
+"Your bag should echo your undertone.|Warm: Camel<br>Cool: Black<br>Neutral: Taupe<br>Olive: Chocolate<br>Deep: Burgundy",
+"Remove what drains you.|Low-value habits<br>Negative loops<br>Unnecessary guilt",
+"Guide the gaze.|Apple: Long pendants<br>Pear: Chokers<br>Hourglass: Medium chains<br>Rectangle: Layered chains<br>Inverted Triangle: Minimal jewelry",
+"Texture creates illusion.|Apple: Drapey<br>Pear: Structured tops<br>Hourglass: Stretch blends<br>Rectangle: Ribbed<br>Inverted Triangle: Fluid",
+"Act like the woman you admire.|Choose maturity<br>Choose composure<br>Choose grace",
+"Hair parting is a silent tool.|Round: Deep side<br>Oval: Middle<br>Square: Soft side<br>Heart: Side with volume<br>Long: Middle layers",
+"Structure changes everything.|Apple: Open blazer<br>Pear: Cropped jacket<br>Hourglass: Tailored blazer<br>Rectangle: Boxy jacket<br>Inverted Triangle: Longline",
+"Discipline is self-respect.|Show up<br>Follow through<br>Rest intentionally",
+"Scarves frame your glow.|Warm: Peach<br>Cool: Icy blue<br>Neutral: Soft rose<br>Olive: Muted green<br>Deep: Wine",
+"Cling or flow—choose.|Apple: Relaxed<br>Pear: Fitted<br>Hourglass: Snug<br>Rectangle: Boxy<br>Inverted Triangle: Draped",
+"Your presence enters before words.|Calm energy<br>Soft confidence<br>Grounded aura",
+"Hair accessories affect harmony.|Warm: Tortoiseshell<br>Cool: Silver<br>Neutral: Pearl<br>Olive: Matte metal<br>Deep: Velvet",
+"Money follows clarity.|Define goals<br>Track spending<br>Value time",
+"Contour with intention.|Round: Under cheekbones<br>Oval: Minimal<br>Square: Soften jaw<br>Heart: Temples<br>Long: Shorten length",
+"Choose your spotlight.|Apple: Neckline<br>Pear: Upper body<br>Hourglass: Waist<br>Rectangle: Shoulders<br>Inverted Triangle: Lower body",
+"Motivation comes after action.|Start imperfectly<br>Gain momentum<br>Build belief",
+"Shoes ground your outfit.|Warm: Nude beige<br>Cool: Black<br>Neutral: Grey<br>Olive: Espresso<br>Deep: Dark plum",
+"Depth creates drama.|Apple: Deep V<br>Pear: Moderate depth<br>Hourglass: Sweetheart<br>Rectangle: Scoop<br>Inverted Triangle: Shallow",
+"Your worth is non-negotiable.|Set boundaries<br>Honor needs<br>Protect energy",
+"Eyebrows balance the face.|Round: Soft arch<br>Oval: Natural<br>Square: Rounded<br>Heart: Gentle curve<br>Long: Flat brow",
+"One color, strong impact.|Apple: Dark mono<br>Pear: Light top<br>Hourglass: Balanced<br>Rectangle: Any shade<br>Inverted Triangle: Dark top",
+"Visualize before you act.|See success<br>Feel calm<br>Then move",
+"Hair length creates illusion.|Round: Below shoulders<br>Oval: Any length<br>Square: Past jaw<br>Heart: Collarbone<br>Long: Short layers",
+"Belts define polish.|Warm: Tan leather<br>Cool: Black leather<br>Neutral: Taupe<br>Olive: Olive brown<br>Deep: Dark chocolate",
+"Spend like your future self.|Intentional purchases<br>Long-term value<br>No regret",
+"Buttons are styling tools.|Apple: Open top<br>Pear: Buttoned<br>Hourglass: Half-open<br>Rectangle: Playful<br>Inverted Triangle: Open neck",
+"Presence is built in details.|Warm accents<br>Cool accents<br>Neutral calm<br>Olive grounded<br>Deep bold",
+"Lip shape changes proportions.|Round: Defined cupid’s bow<br>Oval: Balanced<br>Square: Soft edges<br>Heart: Fuller lower lip<br>Long: Wider shape",
+"You attract what you tolerate.|Raise standards<br>Enforce limits<br>Trust yourself",
+"Rings draw subtle attention.|Warm: Gold bands<br>Cool: Silver<br>Neutral: Mixed<br>Olive: Hammered<br>Deep: Bold stones",
+"Where it ends defines you.|Apple: Midi<br>Pear: Above knee<br>Hourglass: Slit midi<br>Rectangle: Mini<br>Inverted Triangle: Flare midi",
+"Repetition builds confidence.|Daily practice<br>Daily effort<br>Daily growth",
+"Hair color placement sculpts.|Round: Dark roots<br>Oval: Balanced<br>Square: Soft blends<br>Heart: Light ends<br>Long: Side highlights",
+"Edit before you step out.|Remove excess<br>Keep harmony<br>Choose ease",
+"Vertical or horizontal?|Apple: Vertical<br>Pear: Vertical top<br>Hourglass: Balanced<br>Rectangle: Horizontal<br>Inverted Triangle: Vertical bottom",
+"Confidence grows in silence.|Less explanation<br>More consistency<br>Inner certainty",
+"Shoes and bag must converse.|Warm with warm<br>Cool with cool<br>Neutral with neutral<br>Olive with earth<br>Deep with depth",
+"High or low changes focus.|Apple: Low neck<br>Pear: High neck<br>Hourglass: Medium<br>Rectangle: High<br>Inverted Triangle: Open",
+"Manifest through alignment.|Thoughts align<br>Actions align<br>Results follow",
+"Every accessory adds weight.|Warm: Balanced glow<br>Cool: Sharp balance<br>Neutral: Even<br>Olive: Light<br>Deep: Intentional",
+"Your undertone is your signature.|Warm: Radiate warmth<br>Cool: Radiate clarity<br>Neutral: Radiate balance<br>Olive: Radiate depth<br>Deep: Radiate power",
+"Speak abundance aloud.|Money flows easily<br>Opportunities expand<br>I receive calmly",
+"Confidence is keeping promises to yourself.|Start small<br>Finish strong<br>Repeat daily",
+"Money loves direction.|Plan income<br>Plan savings<br>Plan growth",
+"Detach from comparison.|Focus inward<br>Progress quietly<br>Celebrate privately",
+"Elegance is emotional control.|Respond slowly<br>Detach calmly<br>Stay composed",
+"Your mindset is your currency.|Invest in learning<br>Protect optimism<br>Multiply belief",
+"Self-perfection is consistency.|Gentle discipline<br>Steady rhythm<br>Sustainable growth",
+"Speak wealth, not worry.|I have enough<br>I grow steadily<br>I attract more",
+"Confidence is comfort with yourself.|No performance<br>No approval<br>Just presence",
+"You are becoming her.|Calm mind<br>Clear direction<br>Abundant future"
+];
+
+const today = new Date();
+const start = new Date(today.getFullYear(), 0, 0);
+const day = Math.floor((today - start) / 86400000);
+const index = day % entries.length;
+
+const [phrase, lines] = entries[index].split("|");
+document.getElementById("phrase").innerHTML = phrase;
+document.getElementById("lines").innerHTML = lines;
+</script>
+
+</body>
+</html>
